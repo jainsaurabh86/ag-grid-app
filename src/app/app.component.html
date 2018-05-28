@@ -8,9 +8,16 @@
 <!-- <button (click)="getSelectedRows()"<Get Selected Rows</button></button> -->
 
 <div style="bottom: 20px">
-  <button (click)="getSelectedRows()" style="width: auto; height: auto">Release</button>
-  <button (click)="getSelectedRows()" style="width: auto; height: auto">Contest</button>
+  <button (click)="releaseInvoice()" style="width: auto; height: auto">Release</button>
+  <button (click)="contestInvoice()" style="width: auto; height: auto">Contest</button>
 </div>
+
+<script>
+    function myinit(params) {
+    params.api.sizeColumnsToFit();
+  }
+</script>
+
 
 <ag-grid-angular 
     #agGrid
@@ -23,5 +30,6 @@
     [enableFilter]="true"
     rowSelection="multiple"
     [showToolPanel]="showToolPanel"
-    >
+    [enableColResize]="true"    >
+
 </ag-grid-angular>

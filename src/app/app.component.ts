@@ -13,49 +13,51 @@ export class AppComponent implements OnInit {
   title = 'MVP Dashboard';
 
   columnDefs = [
-    {headerName: 'Model', field: 'model', rowGroupIndex: 0 },
-    {headerName: 'Price', field: 'price'}
-];
+    {headerName: '', field: 'invoiceGroupNumber',  rowGroupIndex: 0, hide:true },
+    {headerName: 'Account Number', field: 'accountNumber' },
+    {headerName: 'Account Name', field: 'accountName'},
+    {headerName: 'CG Billing Relationship', field: 'billingRelationship'},
+    {headerName: 'Account Type', field: 'accountType'},
+    {headerName: 'Billable Value', field: 'billableValue'},
+    {headerName: 'Invoice Fee', field: 'invoiceFee'},
+    {headerName: 'Invoice Status', field: 'invoiceStatus'}
+  ];
 
-autoGroupColumnDef = {
-    headerName: 'Make',
-    field: 'make',
+  autoGroupColumnDef = {
+    headerName: 'Invoice Group Number #',
+    // field: 'invoiceGroupNumber',
     cellRenderer: 'agGroupCellRenderer',
     cellRendererParams: {
-        checkbox: true
+      checkbox: true
     }
-};
+  };
 
-rowData: any;
+  rowData: any;
 
-constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {
 
-}
+  }
 
   ngOnInit(){
-    this.rowData = this.http.get('https://api.myjson.com/bins/ly7d1');
-    // https://api.myjson.com/bins/15psn9 --> Small data set
-    // this.rowData = this.http.get('http://localhost:8080/billing')
+    this.rowData = this.http.get('http://localhost:8080/billing');
+    
   }
  
-  getSelectedRows() {
+  releaseInvoice() {
     const selectedNodes = this.agGrid.api.getSelectedNodes();
     const selectedData = selectedNodes.map( node => node.data );
-    const selectedDataStringPresentation = selectedData.map( node => node.make + ' ' + node.model).join(', ');
+    const selectedDataStringPresentation = selectedData.map( node => 'InvoiceGroupNumber=' + node.invoiceGroupNumber + ', AccountNumber= ' + node.accountNumber).join('\n ');
     
-    alert(`Selected nodes: ${selectedDataStringPresentation}`);
+    alert(`Releasing Invoices:\n ${selectedDataStringPresentation}`);
   }
   
-  // columnDefs = [
-    // {headerName: 'Invoice Group Number', field: 'invoiceGroupNumber', checkboxSelection: true },
-    // {headerName: 'Account Number', field: 'accountNumber' },
-    // {headerName: 'Account Name', field: 'accountName'},
-    // {headerName: 'CG Billing Relationship', field: 'billingRelationship'},
-    // {headerName: 'Account Type', field: 'accountType'},
-    // {headerName: 'Billable Value', field: 'billableValue'},
-    // {headerName: 'Invoice Fee', field: 'invoiceFee'},
-    // {headerName: 'Invoice Status', field: 'invoiceStatus'}
-  // ];
+  contestInvoice() {
+    const selectedNodes = this.agGrid.api.getSelectedNodes();
+    const selectedData = selectedNodes.map( node => node.data );
+    const selectedDataStringPresentation = selectedData.map( node => 'InvoiceGroupNumber=' + node.invoiceGroupNumber + ', AccountNumber= ' + node.accountNumber).join('\n ');
+    
+    alert(`Contesting Invoices:\n ${selectedDataStringPresentation}`);
+  }
 
 /*   rowData = [
     { invoiceGroupNumber: '11111', accountNumber: '123-123', accountName:'Apple Inc1', billingRelationship: 543223, accountType:'CGA',  billableValue:'$ 1242323223', invoiceFee: '$32322', invoiceStatus: 'Sent on Jan 1 2018' },
