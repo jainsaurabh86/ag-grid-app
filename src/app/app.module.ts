@@ -5,10 +5,12 @@ import { AppComponent } from './app.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { HttpClientModule } from '@angular/common/http';
 
+import 'ag-grid-enterprise';
+
 @NgModule({
-  declarations: [ AppComponent ],
+  declarations: [AppComponent],
   imports: [BrowserModule, HttpClientModule, AgGridModule.withComponents([])],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
